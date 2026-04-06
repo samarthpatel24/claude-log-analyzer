@@ -1,6 +1,21 @@
-# claude-log-analyzer
+<p align="center">
+  <img src="banner/claude_log_analyzer_banner.svg" alt="claude-log-analyzer" width="100%">
+</p>
 
-MCP server that connects to your Kubernetes cluster and provides Claude Code with tools for log analysis, anomaly detection, and root cause analysis.
+<p align="center">
+  <a href="https://www.npmjs.com/package/claude-log-analyzer"><img src="https://img.shields.io/npm/v/claude-log-analyzer?style=flat-square&color=FF6B00&label=npm" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/claude-log-analyzer"><img src="https://img.shields.io/npm/dm/claude-log-analyzer?style=flat-square&color=FF6B00" alt="npm downloads"></a>
+  <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=flat-square&logo=kubernetes&logoColor=white" alt="Kubernetes">
+  <img src="https://img.shields.io/badge/MCP-compatible-FF6B00?style=flat-square" alt="MCP Compatible">
+  <a href="https://github.com/samarthpatel24/claude-log-analyzer/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License"></a>
+</p>
+
+<p align="center">
+  MCP server that connects to your Kubernetes cluster and provides Claude Code with tools for log analysis, anomaly detection, and root cause analysis.
+</p>
+
+---
 
 ## What it does
 
@@ -12,7 +27,7 @@ MCP server that connects to your Kubernetes cluster and provides Claude Code wit
 
 ## Install
 
-Add to your Claude Code MCP config (`~/.claude/claude_code_config.json`):
+Add to your project's `.mcp.json`:
 
 ```json
 {
@@ -25,22 +40,11 @@ Add to your Claude Code MCP config (`~/.claude/claude_code_config.json`):
 }
 ```
 
-Or per-project in `.mcp.json`:
-
-```json
-{
-  "mcpServers": {
-    "k8s-analyzer": {
-      "command": "npx",
-      "args": ["-y", "claude-log-analyzer"]
-    }
-  }
-}
-```
+> **Windows users:** Use `"command": "cmd"` with `"args": ["/c", "npx", "-y", "claude-log-analyzer"]`
 
 ## Prerequisites
 
-- Node.js >= 18
+- ![Node.js](https://img.shields.io/badge/node-%3E%3D18-green?style=flat-square&logo=node.js&logoColor=white) 
 - A valid kubeconfig (`~/.kube/config` or set `KUBECONFIG` env var)
 - RBAC permissions to read pods, logs, events, and metrics
 - metrics-server on the cluster (optional, for resource metrics)
@@ -135,4 +139,4 @@ Reports are written to disk, not returned in full to the LLM. Every claim is bac
 
 ## License
 
-MIT
+[MIT](LICENSE)
