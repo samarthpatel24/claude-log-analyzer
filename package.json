@@ -1,6 +1,6 @@
 {
   "name": "claude-log-analyzer",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "MCP server for Kubernetes log analysis, anomaly detection, and root cause analysis with Claude Code",
   "type": "module",
   "main": "dist/index.js",

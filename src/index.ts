@@ -13,7 +13,7 @@ import { registerGetRootCauseAnalysis } from "./tools/get-root-cause-analysis.js
 export function createServer(): McpServer {
   const server = new McpServer({
     name: "claude-log-analyzer",
-    version: "1.0.0",
+    version: "0.1.0",
   });
 
   registerListNamespaces(server);
