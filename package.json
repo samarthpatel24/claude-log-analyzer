@@ -1,0 +1,46 @@
+{
+  "name": "claude-log-analyzer",
+  "version": "1.0.0",
+  "description": "MCP server for Kubernetes log analysis, anomaly detection, and root cause analysis with Claude Code",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "claude-log-analyzer": "dist/bin/cli.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/bin/cli.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "kubernetes",
+    "log-analysis",
+    "root-cause-analysis",
+    "claude",
+    "claude-code",
+    "model-context-protocol",
+    "k8s",
+    "observability",
+    "anomaly-detection"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@kubernetes/client-node": "^1.0.0",
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}
