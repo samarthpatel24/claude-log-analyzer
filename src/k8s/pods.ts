@@ -1,21 +1,11 @@
 import { getCoreV1Api } from "./client.js";
 import { PodStatus, ContainerStatus } from "../types/unified-schema.js";
+import { computeAge } from "../utils.js";
 
 export interface GetPodStatusOptions {
   namespace: string;
   podName?: string;
   labelSelector?: string;
-}
-
-function computeAge(startTime: Date | undefined): string {
-  if (!startTime) return "unknown";
-  const diffMs = Date.now() - startTime.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  if (diffMin < 60) return `${diffMin}m`;
-  const diffHr = Math.floor(diffMin / 60);
-  if (diffHr < 24) return `${diffHr}h${diffMin % 60}m`;
-  const diffDays = Math.floor(diffHr / 24);
-  return `${diffDays}d${diffHr % 24}h`;
 }
 
 function extractContainerStatus(cs: any): ContainerStatus {

@@ -1,5 +1,6 @@
-import { Anomaly, AnomalyType } from "../types/anomaly.js";
+import { Anomaly } from "../types/anomaly.js";
 import { PodLogResult, PodStatus, PodMetrics, K8sEvent, Severity } from "../types/unified-schema.js";
+import { extractServiceName, formatBytes } from "../utils.js";
 
 interface AnomalyDetectorInput {
   logs?: PodLogResult[];
@@ -34,16 +35,6 @@ export function detectAnomalies(input: AnomalyDetectorInput): Anomaly[] {
   anomalies.sort((a, b) => severityOrder[a.severity] - severityOrder[b.severity] || a.timestamp.localeCompare(b.timestamp));
 
   return anomalies;
-}
-
-function extractServiceName(podName: string): string {
-  const parts = podName.split("-");
-  if (parts.length >= 3) {
-    let end = parts.length;
-    while (end > 1 && /^[a-z0-9]{4,10}$/.test(parts[end - 1])) end--;
-    return parts.slice(0, Math.max(1, end)).join("-");
-  }
-  return podName;
 }
 
 function detectOOMKills(statuses: PodStatus[]): Anomaly[] {
@@ -340,13 +331,6 @@ function computeZScore(value: number, population: number[]): number {
   const std = stddev(population);
   if (std === 0) return 0;
   return (value - avg) / std;
-}
-
-function formatBytes(bytes: number): string {
-  if (bytes >= 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024 * 1024)).toFixed(1)}Gi`;
-  if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)}Mi`;
-  if (bytes >= 1024) return `${(bytes / 1024).toFixed(1)}Ki`;
-  return `${bytes}B`;
 }
 
 export { mean, stddev, computeZScore };

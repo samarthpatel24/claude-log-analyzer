@@ -3,17 +3,7 @@ import { z } from "zod";
 import { getCoreV1Api } from "../k8s/client.js";
 import { getEvents } from "../k8s/events.js";
 import { ClusterHealthSummary, ProblemPod } from "../types/unified-schema.js";
-
-function computeAge(startTime: Date | undefined): string {
-  if (!startTime) return "unknown";
-  const diffMs = Date.now() - startTime.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
-  if (diffMin < 60) return `${diffMin}m`;
-  const diffHr = Math.floor(diffMin / 60);
-  if (diffHr < 24) return `${diffHr}h${diffMin % 60}m`;
-  const diffDays = Math.floor(diffHr / 24);
-  return `${diffDays}d${diffHr % 24}h`;
-}
+import { computeAge } from "../utils.js";
 
 export function registerGetClusterHealth(server: McpServer): void {
   server.tool(

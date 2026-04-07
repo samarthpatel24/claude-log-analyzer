@@ -1,6 +1,7 @@
 import { getCoreV1Api } from "./client.js";
 import { config } from "../config.js";
 import { PodLogEntry, PodLogResult, LogSeverity } from "../types/unified-schema.js";
+import { safeRegex } from "../utils.js";
 
 const ERROR_KEYWORDS = [
   "error", "err", "fatal", "panic", "exception", "fail", "critical",
@@ -34,11 +35,6 @@ export function detectSeverity(line: string): LogSeverity {
 
 function isNoiseLine(line: string): boolean {
   return NOISE_PATTERNS.some((p) => p.test(line));
-}
-
-function matchesKeywords(line: string, keywords: string[]): boolean {
-  const lower = line.toLowerCase();
-  return keywords.some((kw) => lower.includes(kw));
 }
 
 function parseTimestamp(line: string): { timestamp: string; message: string } {
@@ -90,7 +86,7 @@ export async function fetchPodLogs(opts: FetchLogsOptions): Promise<PodLogResult
   }
 
   const results: PodLogResult[] = [];
-  const grepRegex = opts.grepPattern ? new RegExp(opts.grepPattern, "i") : null;
+  const grepRegex = opts.grepPattern ? safeRegex(opts.grepPattern) : null;
 
   for (const pod of podNames) {
     const targetContainers = opts.containerName
