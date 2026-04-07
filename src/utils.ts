@@ -11,10 +11,12 @@ export function computeAge(startTime: Date | undefined): string {
 
 export function extractServiceName(podName: string): string {
   // Remove ReplicaSet hash and pod hash: my-service-7f8b9c4d5-x2k4j -> my-service
+  // A hash segment is 4–10 alphanumeric chars containing at least one digit.
+  // Requiring a digit prevents plain words (e.g. "service") from being stripped.
   const parts = podName.split("-");
   if (parts.length >= 3) {
     let end = parts.length;
-    while (end > 1 && /^[a-z0-9]{4,10}$/.test(parts[end - 1])) {
+    while (end > 1 && /^[a-z0-9]{4,10}$/.test(parts[end - 1]) && /\d/.test(parts[end - 1])) {
       end--;
     }
     return parts.slice(0, Math.max(1, end)).join("-");
